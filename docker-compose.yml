@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://127.0.0.1:27017/thealteroffice
+      - REDIS_URL=redis://localhost:6379
+      - JWT_SECRET=your-jwt-secret
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis
+
+volumes:
+  mongo-data:
